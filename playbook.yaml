@@ -10,6 +10,7 @@
       - curl
       - jq
       - vim
+      - magic-wormhole
   tasks:
     - name: Update hostname to the provided argument
       ansible.builtin.hostname:
