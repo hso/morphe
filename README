@@ -1,0 +1,1 @@
+until ping -c 1 hyle.hso.rocks; do sleep 1; done && ansible-playbook -i inventory.ini playbook.yml -e "target_name=your-new-hostname"

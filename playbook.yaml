@@ -1,0 +1,45 @@
+---
+- name: Post-installation config for Debian VM
+  hosts: hip
+  become: yes
+  vars:
+    system_packages:
+      - tmux
+      - btop
+      - git
+      - curl
+      - jq
+      - vim
+  tasks:
+    - name: Update hostname to the provided argument
+      ansible.builtin.hostname:
+        name: "{{ target_name }}"
+
+    - name: Regenerate machine id
+      ansible.builtin.shell: |
+        rm -f /etc/machine-id
+        systemd-machine-id-setup
+
+    - name: Rotate SSH host keys
+      ansible.builtin.shell: |
+        rm -f /etc/ssh/ssh_host_*
+        DEBIAN_FRONTEND=noninteractive dpkg-reconfigure openssh-server
+
+    - name: Install predefined system packages
+      ansible.builtin.apt:
+        name: "{{ system_packages }}"
+        state: present
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Reboot the machine to apply changes (fire and forget)
+      ansible.builtin.shell: "sleep 2 && reboot"
+      async: 5
+      poll: 0
+
+    - name: RETTSU GO, METAMORUFOOZE!!1
+      delegate_to: localhost
+      become: no
+      ansible.builtin.shell: xdg-open "https://www.youtube.com/watch?v=y7I9bvh0skY"  # 9uXweFk8Ll8 for the full version
+      run_once: true
+      
