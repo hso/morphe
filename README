@@ -1,1 +1,3 @@
-until ping -c 1 hyle.hso.rocks; do sleep 1; done && ansible-playbook -i inventory.ini playbook.yml -e "target_name=your-new-hostname"
+Create a new VM in Sylve from our golden trixie template, give it a name and run:
+
+mise run r <new-vm-hostname>

@@ -1,0 +1,14 @@
+[tools]
+uv = 'latest'
+ansible-core = 'latest'
+
+[settings]
+python.uv_venv_auto = true
+
+[tasks.reify]
+description = 'Transform the hyle VM into something more useful'
+usage = '''
+arg "<name>" help="New hostname for the fresh VM"
+'''
+run = 'until ping -c 1 hyle.hso.rocks; do sleep 1; done && ansible-playbook -i inventory.ini playbook.yaml -e "target_name=${usage_name?}"'
+alias = 'r'
