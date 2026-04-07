@@ -33,6 +33,10 @@
         update_cache: yes
         cache_valid_time: 3600
 
+    - name: Install mise-en-place
+      become: no
+      ansible.builtin.shell: "curl https://mise.run/bash | sh"
+
     - name: Reboot the machine to apply changes (fire and forget)
       ansible.builtin.shell: "sleep 2 && reboot"
       async: 5
