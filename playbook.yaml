@@ -11,6 +11,7 @@
       - jq
       - vim
       - magic-wormhole
+      - mosh
   tasks:
     - name: Update hostname to the provided argument
       ansible.builtin.hostname:
